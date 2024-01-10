@@ -1,7 +1,7 @@
 export const config = {
-  MINIO_ENDPOINT: 'localhost',
+  MINIO_ENDPOINT: 'minio.thinkspedia.id',
   MINIO_PORT: 9000,
-  MINIO_ACCESSKEY: '4frb4pFSppyUtDlo0VCi',
-  MINIO_SECRETKEY: 'kv836VCOYESk9SZpU3dV7Yx3JAJafn0ICD3dpVpi',
-  MINIO_BUCKET: 'uploadfile'
+  MINIO_ACCESSKEY: 'uxWTbLU6hW8K8a03',
+  MINIO_SECRETKEY: 'tdYpTxk8s77VBmBwFhwGQjRowg2MLfYJ',
+  MINIO_BUCKET: 'hris'
 }
