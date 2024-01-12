@@ -7,12 +7,14 @@ async function bootstrap() {
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  app.enableCors();
+  app.enableCors({
+    origin: '*',
+    credentials: true,
+  });
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   app.useStaticAssets(path.join(__dirname, "../uploads"))
-
   await app.listen(3000);
 }
 bootstrap();
