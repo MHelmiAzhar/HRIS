@@ -17,7 +17,7 @@ import { JwtStrategy } from './jwt.strategy';
         return {
           secret: config.get<string>('JWT_SECRET'),
           signOptions: {
-            expiresIn: config.get<string | number>('JWT_EXPIRES'),
+            expiresIn: config.get<string | number>('JWT_EXPIRES') || '8h',
           },
         };
       },
