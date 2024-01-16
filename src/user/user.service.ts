@@ -1,8 +1,12 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from 'src/schemas/user.schema';
 import { Model } from 'mongoose';
-import * as bcrypt from 'bcryptjs'
+import * as bcrypt from 'bcryptjs';
 import { Query } from 'express-serve-static-core';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -16,19 +20,17 @@ export class UserService {
     @InjectModel(User.name)
     public userModel: Model<User>,
     public jwtService: JwtService,
-
-  ) { }
-
+  ) {}
 
   async findAll(query: Query): Promise<User[]> {
-
-
-    const keyword = query.keyword ? {
-      name: {
-        $regex: query.keyword,
-        $options: 'i',
-      }
-    } : {};
+    const keyword = query.keyword
+      ? {
+          name: {
+            $regex: query.keyword,
+            $options: 'i',
+          },
+        }
+      : {};
 
     const users = await this.userModel.find({ ...keyword });
     return users;
@@ -43,7 +45,8 @@ export class UserService {
   // }
 
   async createUser(createUserDto: CreateUserDto): Promise<{ token: string }> {
-    const { name, email, numberphone, password, divisi, position, } = createUserDto;
+    const { name, email, address, numberphone, password, divisi, position } =
+      createUserDto;
 
     // Periksa apakah email sudah ada dalam basis data
     const existingEmailUser = await this.userModel.findOne({ email });
@@ -57,21 +60,20 @@ export class UserService {
       throw new BadRequestException('Phone number already exists');
     }
 
-
-    const hashedPassword = await bcrypt.hash(password, 10)
-
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await this.userModel.create({
       name,
       email,
+      address,
       numberphone,
       password: hashedPassword,
       divisi,
       position,
       role: 'Public',
-    })
+    });
 
-    const token = this.jwtService.sign({ id: user._id })
+    const token = this.jwtService.sign({ id: user._id });
 
     return { token };
   }
@@ -99,20 +101,28 @@ export class UserService {
       const updatedUsers = await Promise.all(
         users.map(async (user) => {
           // Anda bisa menyesuaikan logika penambahan jatah cuti sesuai kebutuhan
-          const updatedRemainingCuti = isNaN(user.remainingCuti) ? 1 : user.remainingCuti + 1;
+          const updatedRemainingCuti = isNaN(user.remainingCuti)
+            ? 1
+            : user.remainingCuti + 1;
 
           // Simpan perubahan ke database
           return await this.userModel.findByIdAndUpdate(
             user._id,
             { remainingCuti: updatedRemainingCuti },
-            { new: true } // Opsional, untuk mendapatkan data terupdate
+            { new: true }, // Opsional, untuk mendapatkan data terupdate
           );
-        })
+        }),
       );
 
-      console.log('Jatah cuti berhasil ditambahkan untuk semua user:', updatedUsers);
+      console.log(
+        'Jatah cuti berhasil ditambahkan untuk semua user:',
+        updatedUsers,
+      );
     } catch (error) {
-      console.error('Error saat menambahkan jatah cuti untuk semua user:', error);
+      console.error(
+        'Error saat menambahkan jatah cuti untuk semua user:',
+        error,
+      );
       throw error;
     }
   }
@@ -120,34 +130,33 @@ export class UserService {
   async login(loginDto: LoginDto): Promise<{ token: string }> {
     const { email, password } = loginDto;
 
-    const user = await this.userModel.findOne({ email })
+    const user = await this.userModel.findOne({ email });
 
     if (!user) {
-      throw new UnauthorizedException('Invalid Email')
+      throw new UnauthorizedException('Invalid Email');
     }
 
-    const isPasswordMatched = await bcrypt.compare(password, user.password)
+    const isPasswordMatched = await bcrypt.compare(password, user.password);
 
     if (!isPasswordMatched) {
-      throw new UnauthorizedException('Invalid Password')
+      throw new UnauthorizedException('Invalid Password');
     }
-    const token = this.jwtService.sign({ id: user._id, role: user.role })
-    const role = user.role
-    const username = user.name
-    const useremail = user.email
+    const token = this.jwtService.sign({ id: user._id, role: user.role });
+    const role = user.role;
+    const username = user.name;
+    const useremail = user.email;
     const data = {
       token: token,
       role: role,
       username: username,
-      useremail: useremail
-    }
+      useremail: useremail,
+    };
 
     return data;
   }
 
   async deleteById(id: string): Promise<User> {
-    return await this.userModel.findByIdAndDelete(id, {
-    });
+    return await this.userModel.findByIdAndDelete(id, {});
   }
 
   async getUserById(id: string) {
@@ -155,7 +164,9 @@ export class UserService {
     return user;
   }
 
-  async getUserFromToken(token: string): Promise<{ id_user: string, role: string }> {
+  async getUserFromToken(
+    token: string,
+  ): Promise<{ id_user: string; role: string }> {
     const payload = this.jwtService.verify(token);
 
     const user = await this.getUserById(payload.id);
@@ -166,9 +177,4 @@ export class UserService {
 
     return { id_user: payload.id, role: user.role };
   }
-
-
-
-
-
 }
