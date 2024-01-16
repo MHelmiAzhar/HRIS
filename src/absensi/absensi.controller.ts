@@ -1,4 +1,16 @@
-import { Body, Controller, Get, Param, Patch, Post, Query, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Req,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { CreateAbsensiDto } from './dto/create-absensi.dto';
 import { AbsensiService } from './absensi.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -10,16 +22,14 @@ import { UpdateAbsensiDto } from './dto/update-absen.dto';
 import { Cron } from '@nestjs/schedule';
 import { User } from 'src/schemas/user.schema';
 
-
 @Controller('absensi')
 export class AbsensiController {
-
-  constructor(private absensiService: AbsensiService,) { }
+  constructor(private absensiService: AbsensiService) {}
 
   @Get('/all')
   @UseGuards(AuthGuard())
   async getAllabsens(@Query() query: ExpressQuery): Promise<Absensi[]> {
-    return this.absensiService.findAll(query)
+    return this.absensiService.findAll(query);
   }
 
   @Post('/create')
@@ -28,18 +38,29 @@ export class AbsensiController {
   async createAbsen(
     @UploadedFile() image: BufferedFile,
     @Body() createAbsensiDto: CreateAbsensiDto,
-    @Req() req,): Promise<Absensi> {
-    return await this.absensiService.createAbsensi(createAbsensiDto, req.user, image);
+    @Req() req,
+  ) {
+    return await this.absensiService.createAbsensi(
+      createAbsensiDto,
+      req.user,
+      image,
+    );
   }
 
   @Get('by/:id')
-  async getAbsensiByUserId(@Param('id') id: string, @Query() query: ExpressQuery) {
+  async getAbsensiByUserId(
+    @Param('id') id: string,
+    @Query() query: ExpressQuery,
+  ) {
     const absensi = await this.absensiService.findAbsensiByUserId(id, query);
     return absensi;
   }
 
   @Patch('checkout/:id')
-  async updateCheckout(@Param('id') id: string, @Body() updateAbsensiDto: UpdateAbsensiDto): Promise<Absensi> {
+  async updateCheckout(
+    @Param('id') id: string,
+    @Body() updateAbsensiDto: UpdateAbsensiDto,
+  ): Promise<Absensi> {
     return this.absensiService.updateCheckout(id, updateAbsensiDto);
   }
 
@@ -64,13 +85,12 @@ export class AbsensiController {
   @Get('/history')
   async getAllDataSortedByDate(@Query() query: ExpressQuery) {
     const result = await this.absensiService.getAllDataSortedByDate(query);
-  
-  const data = result.data; // Data yang dipaginasi
-  const totalPages = result.totalPages; // Jumlah total halaman
 
-  // Lakukan proses lanjutan dengan 'data' dan 'totalPages' sesuai kebutuhan Anda
-  
-  return { data, totalPages };
+    const data = result.data; // Data yang dipaginasi
+    const totalPages = result.totalPages; // Jumlah total halaman
+
+    // Lakukan proses lanjutan dengan 'data' dan 'totalPages' sesuai kebutuhan Anda
+
+    return { data, totalPages };
   }
-
 }

@@ -12,18 +12,20 @@ export class DokumenService {
   constructor(
     @InjectModel(Dokumen.name)
     private dokumenModel: Model<Dokumen>,
-    private minioClientService: MinioClientService
-
-  ) { }
+    private minioClientService: MinioClientService,
+  ) {}
 
   async getAllDokumen() {
     return await this.dokumenModel.find().exec();
   }
 
-  async createDokumen(dokumen: any, user: User, image: BufferedFile): Promise<Dokumen> {
-
-    let uploaded_image = await this.minioClientService.upload(image)
-
+  async createDokumen(
+    dokumen: any,
+    user: User,
+    image: BufferedFile,
+  ): Promise<Dokumen> {
+    const userId = user._id;
+    let uploaded_image = await this.minioClientService.upload(image, userId);
 
     const data = Object.assign(dokumen, {
       user: {
@@ -31,27 +33,24 @@ export class DokumenService {
         name: user.name,
       },
       file: uploaded_image.url,
-
     });
-
-    console.log(uploaded_image.url);
 
     const res = await this.dokumenModel.create(data);
     return res;
   }
 
-  async uploadSingle(image: BufferedFile) {
-    let uploaded_image = await this.minioClientService.upload(image)
+  // async uploadSingle(image: BufferedFile) {
+  //   let uploaded_image = await this.minioClientService.upload(image);
 
-    const newUpload = new this.dokumenModel({
-      file: uploaded_image.url,
-    });
+  //   const newUpload = new this.dokumenModel({
+  //     file: uploaded_image.url,
+  //   });
 
-    await newUpload.save();
+  //   await newUpload.save();
 
-    return {
-      image_url: uploaded_image.url,
-      message: "Successfully uploaded to MinIO S3 and saved to the database"
-    }
-  }
+  //   return {
+  //     image_url: uploaded_image.url,
+  //     message: 'Successfully uploaded to MinIO S3 and saved to the database',
+  //   };
+  // }
 }
