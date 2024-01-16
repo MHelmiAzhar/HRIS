@@ -1,24 +1,20 @@
-import { IsString } from "class-validator";
-import { User } from "src/schemas/user.schema";
-
-
+import { IsString } from 'class-validator';
+import { User } from 'src/schemas/user.schema';
 
 export class CreateIzinDto {
+  // @IsString()
+  izin: string;
 
-    // @IsString()
-    izin: string;
+  // @IsString()
+  fromdate: string;
 
-    // @IsString()
-    fromdate: Date;
+  // @IsString()
+  untildate: string;
 
-    // @IsString()
-    untildate: Date;
+  // file: Buffer;
 
-    // file: Buffer;
+  // @IsString()
+  description: string;
 
-    // @IsString()
-    description: string;
-
-    user: User;
-
+  user: User;
 }

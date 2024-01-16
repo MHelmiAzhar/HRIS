@@ -1,53 +1,48 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { User } from "./user.schema";
-import { Document } from "mongoose";
-import { IIzin } from "src/interface/interface.izin";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { User } from './user.schema';
+import { Document } from 'mongoose';
+import { IIzin } from 'src/interface/interface.izin';
 
 export enum Category {
-    Wait_For_Response = 'Wait For Response',
-    Approved = 'Approved',
-    Reject = 'Reject'
+  Wait_For_Response = 'Wait For Response',
+  Approved = 'Approved',
+  Reject = 'Reject',
 }
 
 export enum Category1 {
-    Permission = 'Permission',
+  Permission = 'Permission',
 }
 
-
-
 @Schema({
-    timestamps: true,
+  timestamps: true,
 })
-
 export class Izin extends Document implements IIzin {
+  @Prop()
+  izin: string;
 
-    @Prop()
-    izin: string;
+  @Prop()
+  approval: Category;
 
-    @Prop()
-    approval: Category;
+  @Prop()
+  fromdate: string;
 
-    @Prop()
-    fromdate: Date;
+  @Prop()
+  date: Date;
 
-    @Prop()
-    date: Date;
+  @Prop()
+  untildate: string;
 
-    @Prop()
-    untildate: Date;
+  @Prop()
+  file: string;
 
-    @Prop()
-    file: string;
+  @Prop()
+  description: string;
 
-    @Prop()
-    description: string;
+  @Prop()
+  type: Category1;
 
-    @Prop()
-    type: Category1;
-
-    @Prop()
-    user: User;
-
+  @Prop()
+  user: User;
 }
 
 export const IzinSchema = SchemaFactory.createForClass(Izin);

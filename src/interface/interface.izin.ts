@@ -1,24 +1,20 @@
-import { Category } from "src/schemas/izin.schema";
-import { IUser } from "./interface.user";
-
+import { Category } from 'src/schemas/izin.schema';
+import { IUser } from './interface.user';
 
 export interface IIzin {
+  izin: string;
 
-    izin: string;
+  approval: Category;
 
-    approval: Category;
+  fromdate: string;
 
-    fromdate: Date;
+  date: Date;
 
-    date: Date;
-    
-    untildate: Date;
+  untildate: string;
 
-    file: string;
+  file: string;
 
-    description: string;
+  description: string;
 
-    user: IUser;
-
+  user: IUser;
 }
-
