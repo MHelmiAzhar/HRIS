@@ -111,7 +111,7 @@ export class IzinService {
     const userId = user._id;
     const Time = new Date();
 
-    let uploaded_image = await this.minioClientService.upload(image, userId);
+    // let uploaded_image = await this.minioClientService.upload(image, userId);
 
     const data = Object.assign(izin, {
       user: {
@@ -122,7 +122,7 @@ export class IzinService {
       },
       date: Time,
       approval: 'Wait For Response',
-      file: uploaded_image.url, // Assuming your schema has a field 'imageUrl'
+      //file: uploaded_image.url, // Assuming your schema has a field 'imageUrl'
     });
 
     const res = await this.izinModel.create(data);
