@@ -19,6 +19,7 @@ import { Cron } from '@nestjs/schedule';
 import { Cuti } from 'src/schemas/cuti.schema';
 import { Izin } from 'src/schemas/izin.schema';
 import axios from 'axios';
+import { log } from 'console';
 
 @Injectable()
 export class AbsensiService {
@@ -293,8 +294,9 @@ export class AbsensiService {
         $gte: today, // Greater than or equal to today's date
         $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000), // Less than tomorrow's date
       },
-      'user._id': userId,
+      'user.id': userId,
     });
+
     if (checkAbsen)
       throw new BadRequestException('You have taken attendance today');
 
