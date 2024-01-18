@@ -75,7 +75,7 @@ export class AbsensiController {
   //   @UploadedFile() image: BufferedFile
   // ) {
   //   return await this.absensiService.uploadSingle(image)
-  // }
+  //
 
   @Get('/absent-users')
   async getAbsentUsersToday() {
