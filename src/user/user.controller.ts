@@ -1,4 +1,16 @@
-import { Body, Controller, Patch, Post, Get, Query, Param, Delete, UseGuards, Req, Request } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Patch,
+  Post,
+  Get,
+  Query,
+  Param,
+  Delete,
+  UseGuards,
+  Req,
+  Request,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -8,46 +20,49 @@ import { LoginDto } from './dto/login.dto';
 import { RolesGuard } from './roles.guard';
 import { Roles } from './roles.decorator';
 import { JWTAuthGuard } from './jwt-auth.guard';
-import { request } from "express"
+import { request } from 'express';
 
 @Controller('user')
 export class UserController {
+  constructor(private userService: UserService) {}
 
-  constructor(private userService: UserService,) { }
-
-
-
-  @Post('/create')
+  @Post('create')
   // @Roles('Public') // Anda perlu membuat decorator ini
   // @UseGuards(RolesGuard) // Gunakan guard yang Anda buat
   createUser(@Body() createUserDto: CreateUserDto): Promise<{ token: string }> {
-    return this.userService.createUser(createUserDto)
+    return this.userService.createUser(createUserDto);
   }
 
   @Post('/login')
   login(@Body() loginDto: LoginDto): Promise<{ token: string }> {
-    return this.userService.login(loginDto)
+    return this.userService.login(loginDto);
   }
 
   @Patch('/update/:id')
-  updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<User> {
-    return this.userService.updateUser(id, updateUserDto)
+  updateUser(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<User> {
+    return this.userService.updateUser(id, updateUserDto);
   }
 
   @Get('/all')
-  async getAllUsers(@Query() query: ExpressQuery, @Param('id') id: string): Promise<User[]> {
-    return this.userService.findAll(query)
+  async getAllUsers(
+    @Query() query: ExpressQuery,
+    @Param('id') id: string,
+  ): Promise<User[]> {
+    return this.userService.findAll(query);
   }
 
   @Get('by/:id')
   async getUserById(@Param('id') id: string): Promise<User> {
-    return this.userService.getUserById(id)
+    return this.userService.getUserById(id);
   }
 
   @Delete('/delete/:id')
   deleteUser(
     @Param('id')
-    id: string
+    id: string,
   ): Promise<User> {
     return this.userService.deleteById(id);
   }
@@ -70,5 +85,4 @@ export class UserController {
       throw error;
     }
   }
-
 }

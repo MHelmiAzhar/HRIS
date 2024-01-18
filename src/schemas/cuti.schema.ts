@@ -1,53 +1,48 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { User } from "./user.schema";
-import { Document } from "mongoose";
-import { ICuti } from "src/interface/interface.cuti";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
+import { ICuti } from 'src/interface/interface.cuti';
+import { IUser } from 'src/interface/interface.user';
 
 export enum Category {
-    Wait_For_Response = 'Wait For Response',
-    Approved = 'Approved',
-    Reject = 'Reject'
+  Wait_For_Response = 'Wait For Response',
+  Approved = 'Approved',
+  Reject = 'Reject',
 }
 
 export enum Category1 {
-    Leave = 'Leave',
-
+  Leave = 'Leave',
 }
 
 @Schema({
-    timestamps: true,
+  timestamps: true,
 })
 export class Cuti extends Document implements ICuti {
+  @Prop()
+  cuti: string;
 
-    @Prop()
-    cuti: string;
+  @Prop()
+  approval: Category;
 
-    @Prop()
-    approval: Category;
+  @Prop()
+  fromdate: Date;
 
-    @Prop()
-    fromdate: Date;
-    
-    @Prop()
-    date: Date;
+  @Prop()
+  date: Date;
 
-    @Prop()
-    untildate: Date;
+  @Prop()
+  untildate: Date;
 
-    @Prop()
-    file: string;
+  @Prop()
+  file: string;
 
-    @Prop()
-    description: string;
+  @Prop()
+  description: string;
 
-    @Prop()
-    type: Category1;
+  @Prop()
+  type: Category1;
 
-    @Prop()
-    user: User;
-
-
-
+  @Prop()
+  user: IUser;
 }
 
 export const CutiSchema = SchemaFactory.createForClass(Cuti);

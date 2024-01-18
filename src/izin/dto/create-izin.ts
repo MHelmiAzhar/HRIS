@@ -1,5 +1,5 @@
 import { IsString } from 'class-validator';
-import { User } from 'src/schemas/user.schema';
+import { IUser } from 'src/interface/interface.user';
 
 export class CreateIzinDto {
   // @IsString()
@@ -16,5 +16,5 @@ export class CreateIzinDto {
   // @IsString()
   description: string;
 
-  user: User;
+  user: IUser;
 }

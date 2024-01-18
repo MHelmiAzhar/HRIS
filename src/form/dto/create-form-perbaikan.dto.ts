@@ -1,32 +1,28 @@
-import { IsString } from "class-validator";
-import { Category, Category1 } from "src/schemas/form.schema";
-import { User } from "src/schemas/user.schema";
-
-
-
+import { IsString } from 'class-validator';
+import { IUser } from 'src/interface/interface.user';
+import { Category, Category1 } from 'src/schemas/form.schema';
+import { User } from 'src/schemas/user.schema';
 
 export class CreateFormRepairDto {
+  category: Category1;
 
-    category: Category1;
+  approval: Category;
 
-    approval: Category;
+  // @IsString()
+  title: string;
 
-    // @IsString()
-    title: string;
+  date: Date;
 
-    date: Date;
+  // @IsString()
+  chronology: string;
 
-    // @IsString()
-    chronology: string;
+  // @IsString()
+  damage: string;
 
-    // @IsString()
-    damage: string;
+  // @IsString()
+  cost: string;
 
-    // @IsString()
-    cost: string;
+  upload: Buffer;
 
-    upload: Buffer;
-
-    user: User;
-
+  user: IUser;
 }

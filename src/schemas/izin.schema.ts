@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { User } from './user.schema';
 import { Document } from 'mongoose';
 import { IIzin } from 'src/interface/interface.izin';
+import { IUser } from 'src/interface/interface.user';
 
 export enum Category {
   Wait_For_Response = 'Wait For Response',
@@ -42,7 +42,7 @@ export class Izin extends Document implements IIzin {
   type: Category1;
 
   @Prop()
-  user: User;
+  user: IUser;
 }
 
 export const IzinSchema = SchemaFactory.createForClass(Izin);

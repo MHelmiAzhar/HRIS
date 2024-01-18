@@ -1,12 +1,9 @@
-import { User } from "src/schemas/user.schema";
+import { IUser } from './interface.user';
 
 export class IDokumen {
+  title: string;
 
-    title: string;
+  file: Buffer;
 
-    file: Buffer;
-
-    user: User;
-
+  user: IUser;
 }
-

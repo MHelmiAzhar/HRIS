@@ -1,59 +1,55 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { User } from "./user.schema";
-import { Document } from "mongoose";
-import { IForm } from "src/interface/interface.form";
-
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
+import { IForm } from 'src/interface/interface.form';
+import { IUser } from 'src/interface/interface.user';
 
 export enum Category1 {
-    Repair = 'Repair',
-    Purchase = 'Purchase'
+  Repair = 'Repair',
+  Purchase = 'Purchase',
 }
 
 export enum Category {
-    Wait_For_Response = 'Wait For Response',
-    Approved = 'Approved',
-    Reject = 'Rejected'
+  Wait_For_Response = 'Wait For Response',
+  Approved = 'Approved',
+  Reject = 'Rejected',
 }
 
-
 @Schema({
-    timestamps: true,
+  timestamps: true,
 })
 export class Form extends Document implements IForm {
+  @Prop()
+  category: Category1;
 
-    @Prop()
-    category: Category1;
+  @Prop()
+  approval: Category;
 
-    @Prop()
-    approval: Category;
+  @Prop()
+  title: string;
 
-    @Prop()
-    title: string;
+  @Prop()
+  date: Date;
 
-    @Prop()
-    date: Date;
+  @Prop()
+  chronology: string;
 
-    @Prop()
-    chronology: string;
+  @Prop()
+  damage: string;
 
-    @Prop()
-    damage: string;
+  @Prop()
+  name: string;
 
-    @Prop()
-    name: string;
+  @Prop()
+  reason: string;
 
-    @Prop()
-    reason: string;
+  @Prop()
+  cost: string;
 
-    @Prop()
-    cost: string;
+  @Prop()
+  upload: string;
 
-    @Prop()
-    upload: string;
-
-    @Prop()
-    user: User;
-
+  @Prop()
+  user: IUser;
 }
 
 export const FormSchema = SchemaFactory.createForClass(Form);

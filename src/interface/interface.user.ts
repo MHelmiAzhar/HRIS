@@ -1,24 +1,21 @@
-
 export class IUser {
+  _id?: string;
 
-    name?: string;
+  name?: string;
 
-    email?: string;
+  email?: string;
 
-    password?: string;
+  password?: string;
 
-    address?: string;
+  address?: string;
 
-    numberphone?: number;
+  numberphone?: number;
 
-    divisi?: string;
+  divisi?: string;
 
-    position?: string;
+  position?: string;
 
-    role?: string;
+  role?: string;
 
-    remainingCuti?: number;
-
-
+  remainingCuti?: number;
 }
-

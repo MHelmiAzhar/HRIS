@@ -1,26 +1,22 @@
-import { IsString } from "class-validator";
-import { User } from "src/schemas/user.schema";
-
-
+import { IsString } from 'class-validator';
+import { IUser } from 'src/interface/interface.user';
 
 export class CreateCutiDto {
+  // @IsString()
+  cuti: string;
 
-    // @IsString()
-    cuti: string;
+  // @IsString()
+  fromdate: Date;
 
-    // @IsString()
-    fromdate: Date;
+  // @IsString()
+  untildate: Date;
 
-    // @IsString()
-    untildate: Date;
+  file: Buffer;
 
-    file: Buffer;
+  // @IsString()
+  description: string;
 
-    // @IsString()
-    description: string;
+  user: IUser;
 
-    user: User;
-
-    remainingCuti: number;
-
+  remainingCuti: number;
 }
