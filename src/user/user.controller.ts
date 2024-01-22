@@ -21,7 +21,9 @@ import { RolesGuard } from './roles.guard';
 import { Roles } from './roles.decorator';
 import { JWTAuthGuard } from './jwt-auth.guard';
 import { request } from 'express';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('USER')
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
@@ -47,10 +49,7 @@ export class UserController {
   }
 
   @Get('/all')
-  async getAllUsers(
-    @Query() query: ExpressQuery,
-    @Param('id') id: string,
-  ): Promise<User[]> {
+  async getAllUsers(@Query() query: ExpressQuery): Promise<User[]> {
     return this.userService.findAll(query);
   }
 

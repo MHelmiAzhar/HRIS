@@ -20,7 +20,9 @@ import { AuthGuard } from '@nestjs/passport';
 import { CreateDokumenDto } from './dto/create-dokumen.dto';
 import { Dokumen } from 'src/schemas/dokumen.schema';
 import { UpdateDokumenDto } from './dto/update-dokumen.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('DOCUMENT')
 @Controller('dokumen')
 export class DokumenController {
   constructor(private dokumenService: DokumenService) {}

@@ -19,9 +19,9 @@ import { Query as ExpressQuery } from 'express-serve-static-core';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { BufferedFile } from 'src/minio/file.model';
 import { UpdateAbsensiDto } from './dto/update-absen.dto';
-import { Cron } from '@nestjs/schedule';
-import { User } from 'src/schemas/user.schema';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('ABSENSI')
 @Controller('absensi')
 export class AbsensiController {
   constructor(private absensiService: AbsensiService) {}

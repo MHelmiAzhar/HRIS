@@ -53,7 +53,7 @@ export class MinioClientService {
     );
 
     return {
-      url: `${config.MINIO_ENDPOINT}:${config.MINIO_PORT}/${config.MINIO_BUCKET}/${filename}`,
+      url: `https://${config.MINIO_ENDPOINT}/${config.MINIO_BUCKET}/${filename}`,
     };
   }
 

@@ -21,7 +21,9 @@ import { Query as ExpressQuery } from 'express-serve-static-core';
 import { UpdateIzinDto } from './dto/update-izin.dto';
 import { BufferedFile } from 'src/minio/file.model';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('IZIN')
 @Controller('izin')
 export class IzinController {
   constructor(private izinService: IzinService) {}
