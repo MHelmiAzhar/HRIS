@@ -184,7 +184,7 @@ export class CutiService {
       );
     }
 
-    const userDetail = await this.userModel.findById(cuti.user._id);
+    const userDetail = await this.userModel.findById(cuti.user.id);
     if (!userDetail) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
@@ -197,7 +197,6 @@ export class CutiService {
     untilDate?.setDate(untilDate.getDate() + 1);
 
     const totalDays = this.calculateDateDifference(fromDate, untilDate);
-    console.log(totalDays);
 
     if (userDetail.remainingCuti - totalDays < 0) {
       throw new HttpException(
