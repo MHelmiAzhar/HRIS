@@ -120,8 +120,10 @@ export class CutiService {
   async createCuti(cuti: any, user: User, image: BufferedFile): Promise<Cuti> {
     const currentDate = new Date();
     const userId = user._id;
-
-    let uploaded_image = await this.minioClientService.upload(image, userId);
+    let uploaded_image;
+    if (image) {
+      uploaded_image = await this.minioClientService.upload(image, userId);
+    }
 
     const fromDate = new Date(cuti.fromdate);
     let untilDate = new Date(cuti.untildate);
@@ -142,7 +144,7 @@ export class CutiService {
         },
         date: currentDate,
         approval: 'Wait For Response',
-        file: uploaded_image.url, // Assuming your schema has a field 'imageUrl'
+        file: uploaded_image?.url || '', // Assuming your schema has a field 'imageUrl'
       });
 
       const res = await this.cutiModel.create(data);

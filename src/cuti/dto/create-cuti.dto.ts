@@ -11,7 +11,7 @@ export class CreateCutiDto {
   // @IsString()
   untildate: Date;
 
-  file: Buffer;
+  file?: Buffer;
 
   // @IsString()
   description: string;

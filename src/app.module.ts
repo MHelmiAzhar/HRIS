@@ -15,14 +15,14 @@ import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
-    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       envFilePath: '.env',
       isGlobal: true,
     }),
+    ScheduleModule.forRoot(),
     MongooseModule.forRoot(process.env.DB_URI),
     MulterModule.register({
-      dest: './uploads'
+      dest: './uploads',
     }),
     UserModule,
     AbsensiModule,
@@ -30,8 +30,9 @@ import { MulterModule } from '@nestjs/platform-express';
     CutiModule,
     MinioClientModule,
     DokumenModule,
-    FormModule,],
-  controllers: [AppController,],
-  providers: [AppService,],
+    FormModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

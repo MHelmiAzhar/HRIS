@@ -38,9 +38,9 @@ export class CutiController {
   @UseInterceptors(FileInterceptor('image'))
   @UseGuards(AuthGuard())
   createCuti(
-    @UploadedFile() image: BufferedFile,
     @Body() createCutiDto: CreateCutiDto,
     @Req() req,
+    @UploadedFile() image?: BufferedFile,
   ): Promise<Cuti> {
     return this.cutiService.createCuti(createCutiDto, req.user, image);
   }
